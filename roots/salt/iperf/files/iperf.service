@@ -1,0 +1,16 @@
+[Unit]
+Description=iperf
+After=network.target
+
+[Service]
+Type=simple
+RemainAfterExit=no
+WorkingDirectory=/home/iperf
+User=iperf
+ExecStartPre=/bin/sh -c 'echo "------------------------------------------------------------" >> /var/log/iperf/results.log'
+ExecStartPre=/bin/sh -c 'echo "STARTING IPERF SERVER" >> /var/log/iperf/results.log'
+ExecStartPre=/bin/sh -c 'echo $(date) >> /var/log/iperf/results.log'
+ExecStart=/bin/sh -c 'iperf --server --udp --port 5090 >> /var/log/iperf/results.log'
+
+[Install]
+WantedBy=multi-user.target
